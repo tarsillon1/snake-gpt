@@ -4,6 +4,51 @@ class SnakeGame {
         this.direction = {x: 1, y: 0};
         this.food = this.generateFood();
         this.score = 0;
+        this.gridSize = 20;
+    }
+    
+    generateFood() {
+        return {
+            x: Math.floor(Math.random() * this.gridSize),
+            y: Math.floor(Math.random() * this.gridSize)
+        };
+    }
+    
+    update() {
+        const head = {
+            x: this.snake[0].x + this.direction.x,
+            y: this.snake[0].y + this.direction.y
+        };
+        this.snake.unshift(head);
+        if (head.x === this.food.x && head.y === this.food.y) {
+            this.score += 1;
+            this.food = this.generateFood();
+        } else {
+            this.snake.pop();
+        }
+        if (this.checkCollision(head)) {
+            this.resetGame();
+        }
+    }
+    
+    checkCollision(head) {
+        return head.x < 0 || head.x >= this.gridSize || head.y < 0 || head.y >= this.gridSize || this.snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y);
+    }
+    
+    resetGame() {
+        this.snake = [{x: 10, y: 10}];
+        this.direction = {x: 1, y: 0};
+        this.food = this.generateFood();
+        this.score = 0;
+    }
+}
+module.exports = SnakeGame;
+class SnakeGame {
+    constructor() {
+        this.snake = [{x: 10, y: 10}];
+        this.direction = {x: 1, y: 0};
+        this.food = this.generateFood();
+        this.score = 0;
         this.gameOver = false;
     }
     

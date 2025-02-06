@@ -1,4 +1,12 @@
+import { Position, Direction } from './types';
+
 class SnakeGame {
+    private snake: Position[];
+    private direction: Direction;
+    private food: Position;
+    private score: number;
+    private gameOver: boolean;
+    
     constructor() {
         this.snake = [{x: 10, y: 10}];
         this.direction = {x: 1, y: 0};
@@ -7,18 +15,18 @@ class SnakeGame {
         this.gameOver = false;
     }
     
-    generateFood() {
+    private generateFood(): Position {
         return {
             x: Math.floor(Math.random() * 20),
             y: Math.floor(Math.random() * 20)
         };
     }
     
-    update() {
+    public update(): void {
         if (this.gameOver) return;
         
         // Move snake
-        const head = {
+        const head: Position = {
             x: this.snake[0].x + this.direction.x,
             y: this.snake[0].y + this.direction.y
         };
@@ -33,13 +41,36 @@ class SnakeGame {
         }
         
         // Check collision with walls or self
-        if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20 || this.snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
+        if (
+            head.x < 0 || 
+            head.x >= 20 || 
+            head.y < 0 || 
+            head.y >= 20 || 
+            this.snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
+        ) {
             this.gameOver = true;
         }
     }
     
-    changeDirection(newDirection) {
+    public changeDirection(newDirection: Direction): void {
         this.direction = newDirection;
     }
+
+    public getScore(): number {
+        return this.score;
+    }
+
+    public isGameOver(): boolean {
+        return this.gameOver;
+    }
+
+    public getSnake(): Position[] {
+        return [...this.snake];
+    }
+
+    public getFood(): Position {
+        return {...this.food};
+    }
 }
-module.exports = SnakeGame;
+
+export default SnakeGame;

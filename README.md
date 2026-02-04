@@ -2,6 +2,8 @@
 
 Welcome to the Snake GPT project! This project is a modern take on the classic Snake game, enhanced with AI capabilities.
 
+This is a test.
+
 ## Features
 - Classic Snake gameplay
 - AI-driven enhancements
